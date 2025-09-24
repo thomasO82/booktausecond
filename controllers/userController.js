@@ -20,9 +20,37 @@ exports.postUser = async (req, res) => {
                 }
             })
 
-            res.send('user creer')
+            res.redirect('/login')
+
+        }else{
+            const error = new Error("Mot de passe non correspondant")
+            error.confirm = error.message
+            throw error
+            
         }
     } catch (error) {
-        res.json(error.message)
+        if (error.code == 'P2002') {
+            res.render("pages/register.twig", {
+                duplicateEmail: "Email deja utilisé"
+            })
+        } else {
+            res.render("pages/register.twig", {
+                errors: error.details,
+                confirmError: error.confirm ? error.confirm : null
+            })
+        }
+
+    }
+}
+
+exports.displayLogin = async (req,res)=>{
+    res.render("pages/login.twig")
+}
+
+exports.login = async (req,res)=>{
+    try {
+        
+    } catch (error) {
+        
     }
 }

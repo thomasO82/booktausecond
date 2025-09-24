@@ -1,0 +1,24 @@
+{% extends "/layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/login.css">
+{% endblock %}
+
+{% block main %}
+	<section>
+		<h2>login</h2>
+        <div>
+            <form action="/login" method="POST">
+                <div>
+                    <label for="mail">Mail</label>
+                    <input type="email" name="mail" id="mail">
+                </div>
+                 <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password">
+                </div>
+                <button>Envoyer</button>
+            </form>
+        </div>
+	</section>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "/layouts/base.twig" %}
 
 {% block style %}
-<link rel="stylesheet" href="/assets/css/register.css">
+	<link rel="stylesheet" href="/assets/css/register.css">
 {% endblock %}
 
 {% block main %}
@@ -12,23 +12,41 @@
 				<div>
 					<label for="firstName">Prenom</label>
 					<input type="text" id="firstName" name="firstName">
+					{% if errors.firstName %}
+						<p>{{errors.firstName}}</p>
+					{% endif %}
 				</div>
 				<div>
 					<label for="lastName">Nom</label>
 					<input type="text" id="lastName" name="lastName">
+					{% if errors.lastName %}
+						<p>{{errors.lastName}}</p>
+					{% endif %}
 				</div>
 				<div>
 					<label for="mail">email</label>
 					<input type="email" id="mail" name="mail">
+					{% if errors.mail %}
+						<p>{{errors.mail}}</p>
+					{% endif %}
+					{% if duplicateEmail %}
+						<p>{{duplicateEmail}}</p>
+					{% endif %}
+
 				</div>
 				<div>
 					<label for="password">password</label>
 					<input type="password" id="password" name="password">
+					{% if errors.password %}
+						<p>{{errors.password}}</p>
+					{% endif %}
 				</div>
-
 				<div>
 					<label for="confirm">Confirmez le mot de passe</label>
 					<input type="password" id="confirm" name="confirm">
+					{% if confirmError %}
+						<p>{{confirmError}}</p>
+					{% endif %}
 				</div>
 				<button>Envoyer</button>
 			</form>

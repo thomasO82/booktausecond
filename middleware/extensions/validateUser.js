@@ -26,10 +26,9 @@ module.exports = Prisma.defineExtension({
                 if (Object.keys(errors).length > 0) {
                     const error = new Error("Erreur de validation")
                     error.details = errors
-                    throw error;
-                    
+                    throw error;  
                 }
-
+                return query(args)
                 
 
             }

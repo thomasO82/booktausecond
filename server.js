@@ -11,10 +11,16 @@ app.use(session({
     resave : true,
     saveUninitialized : true,
 }))
+
 app.use(express.urlencoded({extended: true}))
 app.use(userRouter)
 app.use(bookRouter)
 
+app.use((req, res) => {
+  res.redirect('/home');
+});
+
 app.listen(3000, (err)=>{
     console.log(!err ? "connecté au serveur" : err);
 })
+

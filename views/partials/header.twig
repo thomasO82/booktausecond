@@ -1,9 +1,22 @@
 <header>
-	<h1>Booksmanager</h1>
+	<h1>Booksmanager {{user ? user.firstName ~ " " ~ user.lastName : ""}}</h1>
 	<nav>
 		<ul>
-			<li><a href="">Inscription</a></li>
-			<li><a href="">Connexion</a></li>
+			{% if user %}
+				<li>
+					<a href="/addbook">Ajouter un livre</a>
+				</li>
+				<li>
+					<a href="/logout">Deconexion</a>
+				</li>
+			{% else %}
+				<li>
+					<a href="/register">Inscription</a>
+				</li>
+				<li>
+					<a href="/login">Connexion</a>
+				</li>
+			{% endif %}
 		</ul>
 	</nav>
 </header>

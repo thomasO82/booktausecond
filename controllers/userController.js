@@ -1,4 +1,4 @@
-const session = require("express-session")
+
 const { PrismaClient } = require("../generated/prisma/client")
 const hashExtension = require("../middleware/extensions/userHashPassword")
 const validateUser = require("../middleware/extensions/validateUser")
@@ -76,7 +76,25 @@ exports.login = async (req,res)=>{
 
 
 exports.displayHome = async (req,res)=>{
-    res.render("pages/home.twig" , {
-        user: req.session.user
+    const user = await prisma.user.findUnique({
+        where : {
+            id: req.session.user.id
+        },
+        include : {
+            books: true
+        }
     })
+    
+    res.render("pages/home.twig", {
+        user: user,
+        errorDelete: req.session.errorRequest
+    })
+    delete req.session.errorRequest
 }
+
+exports.logout = async (req,res)=>{
+    req.session.destroy()
+    res.redirect('/login')
+}
+
+

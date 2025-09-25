@@ -1,12 +1,24 @@
 {% extends "layouts/base.twig" %}
 
 {% block style %}
-    <link rel="stylesheet" href="/assets/css/home.css">
+	<link rel="stylesheet" href="/assets/css/home.css">
 {% endblock %}
 
 {% block main %}
-    <h2>Liste des livres</h2>
-    <div>
-        <p>ici la liste des livres apres</p>
+	<div>
+    {{errorRequest}}
     </div>
+	<h2>Liste des livres</h2>
+	<div>
+		{% for book in user.books %}
+			<article>
+				<h3>Titre :
+					{{book.title}}</h3>
+				<p>Auteur :
+					{{book.author}}</p>
+				<a href="/updatebook/{{book.id}}">Modifier</a>
+				<a href="/removebook/{{book.id}}">Supprimer</a>
+			</article>
+		{% endfor %}
+	</div>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/addbook.css">
+{% endblock %}
+
+{% block main %}
+	<section>
+        {% if errorRequest %}{{errorRequest}}{% endif %}
+		<h2>
+			{% if book %}
+				Modification
+			{% else %}
+				Ajout de livre
+			{% endif %}
+		</h2>
+
+		<div>
+			<form action= {{book ? "/updatebook/"~book.id : "/addbook"}} method="post">
+				<div>
+					<label for="title">Titre</label>
+					<input type="text" id="title" name="title" value={{book.title}}>
+				</div>
+				<div>
+					<label for="author">Auteur</label>
+					<input type="text" id="author" name="author" value={{book.author}}>
+				</div>
+				<button>Valider</button>
+			</form>
+		</div>
+	</section>
+{% endblock %}

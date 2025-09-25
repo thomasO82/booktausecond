@@ -1,8 +1,9 @@
-
+const session = require("express-session")
 const { PrismaClient } = require("../generated/prisma/client")
 const hashExtension = require("../middleware/extensions/userHashPassword")
 const validateUser = require("../middleware/extensions/validateUser")
 const prisma = new PrismaClient().$extends(validateUser).$extends(hashExtension)
+const bcrypt = require('bcrypt') // Ajoute cette ligne en haut du fichier
 
 exports.displayRegister = async (req, res) => {
     res.render("pages/register.twig")
@@ -47,10 +48,35 @@ exports.displayLogin = async (req,res)=>{
     res.render("pages/login.twig")
 }
 
+
 exports.login = async (req,res)=>{
     try {
-        
+
+        const user = await prisma.user.findUnique({
+            where: {
+                mail: req.body.mail
+            }
+        })
+        if (user) {
+            if (bcrypt.compareSync(req.body.password,user.password)) {
+                req.session.user = user
+                res.redirect('/home')
+            }else{
+                throw {password: "mauvais mot de passe"}
+            }
+        }else{
+            throw {mail: "Cet ustilisateur n'est pas enregistrer"}
+        }
     } catch (error) {
-        
+        res.render("pages/login.twig", {
+            error:error
+        })
     }
+}
+
+
+exports.displayHome = async (req,res)=>{
+    res.render("pages/home.twig" , {
+        user: req.session.user
+    })
 }
